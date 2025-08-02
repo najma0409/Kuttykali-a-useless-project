@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Breathe</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 150px 50px 50px 50px;
+      background-color: #e0f7fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .hidden {
+      display: none;
+    }
+    .box {
+      border: 2px solid #00796b;
+      padding: 20px;
+      margin: 20px;
+      display: inline-block;
+      background-color: #ffffff;
+      border-radius: 10px;
+    }
+    .button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    #countdown, #countdownExhale {
+      font-size: 30px;
+      margin-top: 20px;
+    }
+    .arrow {
+      width: 100px;
+      height: auto;
+      margin-top: 10px;
+      animation: breatheIn 2s ease-in-out infinite;
+    }
+    @keyframes breatheIn {
+      0% { opacity: 0; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(-10px); }
+      100% { opacity: 0; transform: translateY(0); }
+    }
+    .practice-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .practice-section img {
+      max-width: 150px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="container" style="width: 100%; max-width: 800px; margin: 0 auto; text-align: center;">
+  <div id="intro">
+    <h1>Hey Guys...Today we are going to master the art of Breathing💨</h1>
+    <p>If you don't know how, we can learn here..Are you ready?😌</p>
+    <button class="button" onclick="showStepIntro()">YES!!!</button>
+  </div>
+
+  <div id="stepIntro" class="hidden">
+    <h2>The process of exchanging gas through nostrils is called breathing.</h2>
+    <div>
+      <div class="box">
+          <p>Step 1: Inhalation</p>
+          <img src="inhale.jpg" alt="Inhalation" width="100">
+          </div>
+          <div class="box">
+          <p>Step 2: Exhalation</p>
+          <img src="exhale.png" alt="Exhalation" width="100">
+      </div>
+    </div>
+    <button class="button" onclick="showInhalation()">Okay, Let's Start</button>
+  </div>
+
+  <div id="inhalation" class="hidden">
+    <h2>Step 1: Inhalation</h2>
+    <p>Inhalation is simply breathing in — that is, gas entering the nostrils.</p>
+    <video width="300" autoplay loop muted>
+    <source src="inhale2.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+    </video>    <p>(Imagine this nose is ready to take in some oxygen)</p>
+    <button class="button" onclick="startBreathIn()">Okay, Try It</button>
+  </div>
+
+  <div id="inhalePractice" class="hidden">
+    <h2>Let's Practice Inhaling</h2>
+    <div class="practice-section">
+      <video width="300" autoplay loop muted id="breatheArrow" style="display: none;">
+        <source src="inhalation.gif.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div id="countdown">5</div>
+    </div>
+  </div>
+
+  <div id="successInhale" class="hidden">
+    <h2>🎉 Oh congratulations, you successfully inhaled!</h2>
+    <p>Feeling congested? 😵‍💫 Then we can move to the next step.</p>
+    <button class="button" onclick="showExhalation()">Okay</button>
+  </div>
+
+  <div id="exhalation" class="hidden">
+    <h2>Step 2: Exhalation</h2>
+    <p>Exhalation is simply breathing out — the air filled in your lungs should now move out.</p>
+    <video width="300" autoplay loop muted>
+  <source src="exhalation.gif.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+    <p>(Now the nose is ready to blow out that air!)</p>
+    <button class="button" onclick="startBreathOut()">Okay, Let's Try</button>
+  </div>
+
+  <div id="exhalePractice" class="hidden">
+    <h2>Now Try Exhaling</h2>
+    <div class="practice-section">
+      <video width="300" autoplay loop muted id="exhaleGif" style="display: none;">
+  <source src="exhale-arrow.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+      <div id="countdownExhale">5</div>
+    </div>
+  </div>
+
+  <div id="successExhale" class="hidden">
+    <h2>🎉 Congratulations, you successfully exhaled!</h2>
+    <p>Yeah... it's so simple to learn the skill of breathing.<br>Do you want to continue practicing?</p>
+    <button class="button" onclick="repeatBreathing()">Yes</button>
+    <button class="button" onclick="exitPrompt()">No</button>
+  </div>
+
+  <div id="exitMessage" class="hidden">
+    <h2>You nailed this skill! Can we go back?</h2>
+    <button class="button" onclick="exitSite()">Okay</button>
+  </div>
+
+  <script>
+    function showStepIntro() {
+      document.getElementById("intro").classList.add("hidden");
+      document.getElementById("stepIntro").classList.remove("hidden");
+    }
+
+    function showInhalation() {
+      document.getElementById("stepIntro").classList.add("hidden");
+      document.getElementById("inhalation").classList.remove("hidden");
+    }
+
+    function startBreathIn() {
+      document.getElementById("inhalation").classList.add("hidden");
+      document.getElementById("inhalePractice").classList.remove("hidden");
+      let countdown = 5;
+      const countdownEl = document.getElementById("countdown");
+      const arrow = document.getElementById("breatheArrow");
+
+      const interval = setInterval(() => {
+        countdown--;
+        countdownEl.textContent = countdown;
+        if (countdown <= 0) {
+          clearInterval(interval);
+          countdownEl.textContent = "";
+          arrow.style.display = "block";
+          setTimeout(() => {
+            document.getElementById("inhalePractice").classList.add("hidden");
+            document.getElementById("successInhale").classList.remove("hidden");
+          }, 3000);
+        }
+      }, 1000);
+    }
+
+    function showExhalation() {
+      document.getElementById("successInhale").classList.add("hidden");
+      document.getElementById("exhalation").classList.remove("hidden");
+    }
+
+    function startBreathOut() {
+      document.getElementById("exhalation").classList.add("hidden");
+      document.getElementById("exhalePractice").classList.remove("hidden");
+      let countdown = 5;
+      const countdownEl = document.getElementById("countdownExhale");
+      const gif = document.getElementById("exhaleGif");
+
+      const interval = setInterval(() => {
+        countdown--;
+        countdownEl.textContent = countdown;
+        if (countdown <= 0) {
+          clearInterval(interval);
+          countdownEl.textContent = "";
+          gif.style.display = "block";
+          setTimeout(() => {
+            document.getElementById("exhalePractice").classList.add("hidden");
+            document.getElementById("successExhale").classList.remove("hidden");
+          }, 4000);
+        }
+      }, 1000);
+    }
+
+    function repeatBreathing() {
+      document.getElementById("successExhale").classList.add("hidden");
+      showInhalation();
+    }
+
+    function exitPrompt() {
+      document.getElementById("successExhale").classList.add("hidden");
+      document.getElementById("exitMessage").classList.remove("hidden");
+    }
+
+    function exitSite() {
+      document.body.innerHTML = '<h1>Thanks for mastering the art of breathing! 💨</h1>';
+    }
+
+  </script>
+  </div>

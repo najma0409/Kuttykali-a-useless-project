@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TextNannakkam.com</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .title {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .game-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        .card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-description {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+        }
+
+        .textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            resize: vertical;
+            transition: all 0.2s ease;
+        }
+
+        .textarea:focus {
+            outline: none;
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.2);
+        }
+
+        .textarea::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(238, 90, 36, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 12px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .output-area {
+            min-height: 200px;
+            padding: 15px;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            color: white;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .output-placeholder {
+            color: rgba(255,255,255,0.6);
+            font-style: italic;
+        }
+
+        .copy-btn {
+            width: 100%;
+            margin-top: 15px;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            justify-content: center;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .footer-text {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+        }
+
+        .icon {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* Loading animation */
+        .loading {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Textnannakkam.com</h1>
+            <p class="subtitle">Make your imperfect text perfectly perfect😉</p>
+        </div>
+
+        <div class="game-grid">
+            <!-- Input Section -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        ✨ Original Text
+                    </h2>
+                    <p class="card-description">Enter your perfect paragraph here</p>
+                </div>
+                <div>
+                    <textarea 
+                        id="inputText" 
+                        class="textarea" 
+                        placeholder="Type or paste your text here... I know u can do it!"
+                        rows="8"
+                    ></textarea>
+                    <div class="button-group">
+                        <button id="worsenBtn" class="btn btn-primary">
+                            🔀 Generate the bestest Text!
+                        </button>
+                        <button id="resetBtn" class="btn btn-secondary">
+                            🔄
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output Section -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        🔀 Touch to perfect Text
+                    </h2>
+                    <p class="card-description">Your beautifully imperfect result</p>
+                </div>
+                <div>
+                    <div id="outputText" class="output-area">
+                        <span class="output-placeholder">Your worsened text will appear here... ✨</span>
+                    </div>
+                    <button id="copyBtn" class="btn copy-btn" style="display: none;">
+                        📋 Copy Worsened Text
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p class="footer-text">
+                🎯 Pro tip: Try entering formal business emails, academic papers, or love letters for maximum hilarity! 
+                Now with Malayalam words and random emojis! 😂🔥
+            </p>
+        </div>
+    </div>
+
+    <script>
+        class TextWorsener {
+            constructor() {
+                this.inputText = document.getElementById('inputText');
+                this.outputText = document.getElementById('outputText');
+                this.worsenBtn = document.getElementById('worsenBtn');
+                this.resetBtn = document.getElementById('resetBtn');
+                this.copyBtn = document.getElementById('copyBtn');
+
+                this.initEventListeners();
+                this.initData();
+            }
+
+            initEventListeners() {
+                this.worsenBtn.addEventListener('click', () => this.worsenText());
+                this.resetBtn.addEventListener('click', () => this.resetText());
+                this.copyBtn.addEventListener('click', () => this.copyText());
+                this.inputText.addEventListener('input', () => this.updateButtonState());
+            }
+
+            initData() {
+                // Random replacement words including Malayalam
+                this.randomWords = [
+                    "enthuvaa", "ennitt", "thenga", "mangatholi", "patula", "aaha", "mole", 
+                    "adipoli", "pwoli", "kalipp", "mangaa", "scene", "feel", "vibe", "dude", 
+                    "enthada", "enthu", "kollammm", "pwolichu", "thallal", "machane", "kidu", 
+                    "my**", "bharya", "kuttan", "kuttipattalam", "scene", "item"
+                ];
+
+                this.randomEmojis = [
+                    "😂", "🤣", "😭", "💀", "🔥", "✨", "🎉", "🎊", "🤪", "😜", "🤯", "🥳", 
+                    "🚀", "⭐", "💫", "🌟", "🎯", "💯", "⚡", "💥", "🌈", "🦄", "🐉", "🍕", 
+                    "🍔", "🎂", "🍰", "🧁", "🍭", "🍬", "🎈", "🎁", "🏆", "👑", "💎", "🤖", 
+                    "👽", "🛸", "🌍", "🌙", "☀️", "🌊", "🏔️", "🌺", "🌸", "🦋"
+                ];
+
+                this.spellingMistakes = [
+                    { from: "the", to: "teh" }, { from: "and", to: "adn" }, { from: "you", to: "yuo" },
+                    { from: "are", to: "aer" }, { from: "for", to: "fro" }, { from: "with", to: "wiht" },
+                    { from: "have", to: "ahve" }, { from: "this", to: "tihs" }, { from: "that", to: "taht" },
+                    { from: "they", to: "tehy" }, { from: "were", to: "wree" }, { from: "been", to: "bene" },
+                    { from: "their", to: "thier" }, { from: "said", to: "siad" }, { from: "what", to: "waht" },
+                    { from: "your", to: "yuor" }, { from: "when", to: "wehn" }, { from: "can", to: "cna" },
+                    { from: "all", to: "lal" }, { from: "would", to: "woudl" }
+                ];
+            }
+
+            introduceTypos(word) {
+                if (word.length < 3) return word;
+
+                const typoTypes = [
+                    // Swap adjacent characters
+                    () => {
+                        const pos = Math.floor(Math.random() * (word.length - 1));
+                        return word.slice(0, pos) + word[pos + 1] + word[pos] + word.slice(pos + 2);
+                    },
+                    // Remove a random character
+                    () => {
+                        const pos = Math.floor(Math.random() * word.length);
+                        return word.slice(0, pos) + word.slice(pos + 1);
+                    },
+                    // Duplicate a random character
+                    () => {
+                        const pos = Math.floor(Math.random() * word.length);
+                        return word.slice(0, pos) + word[pos] + word.slice(pos);
+                    },
+                    // Replace a character with a similar one
+                    () => {
+                        const similarChars = {
+                            a: ["e", "o"], e: ["a", "i"], i: ["e", "o"], o: ["a", "u"], u: ["o", "i"],
+                            b: ["p", "v"], p: ["b"], v: ["b", "f"], f: ["v"], g: ["q"], q: ["g"],
+                            m: ["n"], n: ["m"], l: ["r"], r: ["l"], t: ["y"], y: ["t"]
+                        };
+                        const chars = word.toLowerCase().split("");
+                        const pos = Math.floor(Math.random() * chars.length);
+                        const char = chars[pos];
+                        if (similarChars[char]) {
+                            const replacement = similarChars[char][Math.floor(Math.random() * similarChars[char].length)];
+                            chars[pos] = word[pos] === word[pos].toUpperCase() ? replacement.toUpperCase() : replacement;
+                            return chars.join("");
+                        }
+                        return word;
+                    }
+                ];
+
+                const typoFunction = typoTypes[Math.floor(Math.random() * typoTypes.length)];
+                return typoFunction();
+            }
+
+            worsenText() {
+                const text = this.inputText.value.trim();
+                if (!text) return;
+
+                // Add loading state
+                this.worsenBtn.classList.add('loading');
+                this.worsenBtn.textContent = '🔄 Worsening...';
+                this.worsenBtn.disabled = true;
+
+                // Simulate processing time for better UX
+                setTimeout(() => {
+                    const words = text.split(/(\s+|[.,!?;:])/).filter(word => word.length > 0);
+
+                    const worsenedWords = words.map(word => {
+                        // Skip punctuation and whitespace
+                        if (/^\s+$/.test(word) || /^[.,!?;:]+$/.test(word)) {
+                            return word;
+                        }
+
+                        const cleanWord = word.toLowerCase().replace(/[.,!?;:]/g, "");
+                        const punctuation = word.match(/[.,!?;:]/g)?.join("") || "";
+
+                        // 30% chance to replace with random word
+                        if (Math.random() < 0.3 && cleanWord.length > 2) {
+                            const randomWord = this.randomWords[Math.floor(Math.random() * this.randomWords.length)];
+                            return randomWord + punctuation;
+                        }
+
+                        // Check for common spelling mistakes (40% chance)
+                        if (Math.random() < 0.4) {
+                            const mistake = this.spellingMistakes.find(m => m.from === cleanWord);
+                            if (mistake) {
+                                return mistake.to + punctuation;
+                            }
+                        }
+
+                        // 25% chance to introduce typos
+                        if (Math.random() < 0.25 && cleanWord.length > 2) {
+                            return this.introduceTypos(cleanWord) + punctuation;
+                        }
+
+                        return word;
+                    });
+
+                    // Add random emojis throughout the text
+                    const finalWords = [];
+                    for (let i = 0; i < worsenedWords.length; i++) {
+                        finalWords.push(worsenedWords[i]);
+
+                        // Add emoji after some words (15% chance)
+                        if (Math.random() < 0.15 && !/^\s+$/.test(worsenedWords[i]) && !/^[.,!?;:]+$/.test(worsenedWords[i])) {
+                            const randomEmoji = this.randomEmojis[Math.floor(Math.random() * this.randomEmojis.length)];
+                            finalWords.push(" " + randomEmoji);
+                        }
+                    }
+
+                    let result = finalWords.join("");
+
+                    // Sometimes add emojis at the beginning and end
+                    if (Math.random() < 0.3) {
+                        const startEmoji = this.randomEmojis[Math.floor(Math.random() * this.randomEmojis.length)];
+                        result = startEmoji + " " + result;
+                    }
+
+                    if (Math.random() < 0.3) {
+                        const endEmoji = this.randomEmojis[Math.floor(Math.random() * this.randomEmojis.length)];
+                        result = result + " " + endEmoji;
+                    }
+
+                    this.displayResult(result);
+
+                    // Reset button state
+                    this.worsenBtn.classList.remove('loading');
+                    this.worsenBtn.textContent = '🔀 Worsen the Text!';
+                    this.worsenBtn.disabled = false;
+                }, 500);
+            }
+
+            displayResult(result) {
+                this.outputText.textContent = result;
+                this.outputText.classList.remove('output-placeholder');
+                this.copyBtn.style.display = 'block';
+            }
+
+            resetText() {
+                this.inputText.value = '';
+                this.outputText.innerHTML = '<span class="output-placeholder">Your worsened text will appear here... ✨</span>';
+                this.copyBtn.style.display = 'none';
+                this.updateButtonState();
+            }
+
+            copyText() {
+                const text = this.outputText.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = this.copyBtn.textContent;
+                    this.copyBtn.textContent = '✅ Copied!';
+                    setTimeout(() => {
+                        this.copyBtn.textContent = originalText;
+                    }, 2000);
+                });
+            }
+
+            updateButtonState() {
+                this.worsenBtn.disabled = !this.inputText.value.trim();
+            }
+        }
+
+        // Initialize the game when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new TextWorsener();
+        });
+    </script>
+<p>Player: <span id="playerName"></span></p>
+<button onclick="window.location.href='lobby.html'">🔙 Exit to Lobby</button>
+<script>
+  document.getElementById("playerName").innerText = localStorage.getItem("playerName") || "Guest";
+</script>
+
+</body>
+</html>

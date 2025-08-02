@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Game Lobby</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Welcome, <span id="player"></span>!</h1>
+  <p>Select a game to play:</p>
+
+  <div class="game-list">
+    <button onclick="goTo('calculator.html')">🔢 Calculator Game</button>
+    <button onclick="goTo('maram.html')">🌿 Leaf Game</button>
+    <button onclick="goTo('randomtext.html')">📝 Random Text</button>
+    <button onclick="goTo('game4.html')">🎲 Game 4</button>
+  </div>
+
+  <script>
+    document.getElementById("player").innerText = localStorage.getItem("playerName") || "Guest";
+
+    function goTo(page) {
+      window.location.href = page;
+    }
+  </script>
+</body>
+</html>

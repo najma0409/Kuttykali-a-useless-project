@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stick the Leaves</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    #tree-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+    }
+
+    #tree {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .leaf {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      cursor: grab;
+      z-index: 1;
+      transition: transform 0.3s ease;
+    }
+
+    .leaf:active {
+      cursor: grabbing;
+    }
+
+    #counter {
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #2d6a4f;
+      background: #ffffffaa;
+      padding: 8px 12px;
+      border-radius: 10px;
+      z-index: 2;
+    }
+
+    #restart {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      font-size: 16px;
+      padding: 8px 12px;
+      border: none;
+      background: #f4a261;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    #restart:hover {
+      background: #e76f51;
+    }
+
+    /* Popup styles */
+    #popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      text-align: center;
+      z-index: 999;
+      transition: transform 0.4s ease;
+    }
+
+    #popup.show {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    #popup img {
+      width: 100px;
+      margin-top: 20px;
+    }
+
+    #popup h2 {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="tree-container">
+    <img id="tree" src="tree.png" alt="Tree" />
+  </div>
+
+  <div id="counter">Leaves Stuck: 0</div>
+  <button id="restart">Restart</button>
+
+  <div id="popup">
+    <h2>Congratulations NINGAL ORU MARA SNEHI AHNU.....</h2>
+    <p>Ithaaa oru GREEN badge 🟢</p>
+    <img src="badge.png" alt="Green Badge" />
+  </div>
+
+  <script>
+    const counterDisplay = document.getElementById('counter');
+    const restartBtn = document.getElementById('restart');
+    const popup = document.getElementById('popup');
+
+    let stuckCount = 0;
+    const totalLeaves = 20;
+
+    const leafImages = ['leaf1.png', 'leaf2.png', 'leaf3.png'];
+
+    for (let i = 0; i < totalLeaves; i++) {
+      const leaf = document.createElement('img');
+      leaf.src = leafImages[Math.floor(Math.random() * leafImages.length)];
+      leaf.classList.add('leaf');
+
+      const initialX = Math.random() * window.innerWidth * 0.9;
+      const initialY = window.innerHeight * 0.75 + Math.random() * 80;
+      const rotation = Math.random() * 360;
+
+      leaf.style.left = initialX + 'px';
+      leaf.style.top = initialY + 'px';
+      leaf.style.transform = `rotate(${rotation}deg)`;
+
+      document.body.appendChild(leaf);
+
+      let isDragging = false;
+
+      leaf.addEventListener('mousedown', function (e) {
+        isDragging = true;
+        const leafRect = leaf.getBoundingClientRect();
+        const shiftX = e.clientX - leafRect.left;
+        const shiftY = e.clientY - leafRect.top;
+
+        leaf.style.transition = 'none';
+
+        function onMouseMove(event) {
+          const newX = event.pageX - shiftX;
+          const newY = event.pageY - shiftY;
+          leaf.style.left = newX + 'px';
+          leaf.style.top = newY + 'px';
+        }
+
+        function onMouseUp() {
+          isDragging = false;
+          document.removeEventListener('mousemove', onMouseMove);
+          document.removeEventListener('mouseup', onMouseUp);
+
+          leaf.style.transition = 'transform 0.3s ease';
+
+          const treeRect = document.getElementById('tree').getBoundingClientRect();
+          const leafRect = leaf.getBoundingClientRect();
+
+          if (
+            leafRect.left > treeRect.left &&
+            leafRect.right < treeRect.right &&
+            leafRect.top > treeRect.top &&
+            leafRect.bottom < treeRect.bottom
+          ) {
+            leaf.style.pointerEvents = 'none';
+            stuckCount++;
+            counterDisplay.textContent = `Leaves Stuck: ${stuckCount}`;
+
+            if (stuckCount === totalLeaves) {
+              popup.classList.add('show');
+            }
+          }
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+      });
+
+      leaf.ondragstart = () => false;
+    }
+
+    restartBtn.addEventListener('click', () => {
+      location.reload();
+    });
+  </script>
+<p>Player: <span id="playerName"></span></p>
+<button onclick="window.location.href='lobby.html'">🔙 Exit to Lobby</button>
+<script>
+  document.getElementById("playerName").innerText = localStorage.getItem("playerName") || "Guest";
+</script>
+
+</body>
+</html>

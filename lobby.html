@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Lobby</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #0d0d0d, #1c1c2b);
+      color: #f8f8f2;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #9d7df9;
+      margin-bottom: 10px;
+    }
+
+    p {
+      text-align: center;
+      font-size: 18px;
+      color: #d6d6d6;
+    }
+
+    #namePrompt {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 40px;
+    }
+
+    input[type="text"] {
+      padding: 12px 15px;
+      font-size: 16px;
+      width: 100%;
+      max-width: 280px;
+      background-color: #2f2f40;
+      color: #f8f8f2;
+      border: 2px solid #5df2d6;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background: #5df2d6;
+      color: #0d0d0d;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px #5df2d6;
+    }
+
+    button:hover {
+      background: #9d7df9;
+      color: #ffffff;
+      box-shadow: 0 0 15px #9d7df9;
+    }
+
+    #lobby {
+      display: none;
+      margin-top: 30px;
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 24px;
+      justify-items: center;
+      margin-top: 30px;
+      padding: 0 10px;
+    }
+
+    .game-card {
+      background-color: #2a2a3d;
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(157, 125, 249, 0.25);
+      transition: transform 0.3s ease;
+      text-align: center;
+      width: 100%;
+      max-width: 180px;
+    }
+
+    .game-card:hover {
+      transform: scale(1.05);
+    }
+
+    .game-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .game-card button {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="namePrompt">
+    <h1>Welcome to the Mystery Arcade 🎮</h1>
+    <p>Please enter your name to begin:</p>
+    <input type="text" id="playerNameInput" placeholder="Enter your name">
+    <button onclick="enterLobby()">Enter Lobby</button>
+  </div>
+
+  <div id="lobby">
+    <h1>Hello, <span id="playerName"></span>!</h1>
+    <p>Select a game to play:</p>
+    <div class="game-grid">
+      <div class="game-card">
+        <img src="calculatorlogo.png" alt="Calculator Game">
+        <button onclick="location.href='calculator.html'">Calculator Game</button>
+      </div>
+      <div class="game-card">
+        <img src="randomtextlogo.png" alt="Random Text Generator">
+        <button onclick="location.href='randomtext.html'">Text Generator</button>
+      </div>
+      <div class="game-card">
+        <img src="hammer-icon.png" alt="Hammer Game">
+        <button onclick="location.href='game4.html'">Hammer Smash</button>
+      </div>
+      <div class="game-card">
+        <img src="maramlogo.png" alt="Leaf Stick Game">
+        <button onclick="location.href='maram.html'">Leaf Stick</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function enterLobby() {
+      const nameInput = document.getElementById("playerNameInput");
+      const name = nameInput.value.trim();
+      if (name !== "") {
+        document.getElementById("namePrompt").style.display = "none";
+        document.getElementById("lobby").style.display = "block";
+        document.getElementById("playerName").textContent = name;
+      } else {
+        alert("Please enter your name!");
+      }
+    }
+  </script>
+</body>
+</html>

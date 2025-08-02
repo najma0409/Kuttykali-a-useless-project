@@ -1,0 +1,191 @@
+/*body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #e0f7fa, #e1f5fe);
+  color: #333;
+  margin: 0;
+  padding: 40px 20px;
+  text-align: center;
+  min-height: 100vh;
+}
+
+h1, h2 {
+  color: #004d40;
+  margin-bottom: 10px;
+}
+
+input[type="text"] {
+  padding: 12px 15px;
+  font-size: 16px;
+  width: 80%;
+  max-width: 300px;
+  margin: 15px 0;
+  border: 2px solid #0288d1;
+  border-radius: 6px;
+  outline: none;
+}
+
+button {
+  background: #0288d1;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  margin: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #0277bd;
+}
+
+.center-box {
+  background-color: #ffffff;
+  padding: 30px;
+  max-width: 400px;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 30px;
+  max-width: 800px;
+  margin: 40px auto;
+}
+
+.game-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.game-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.game-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.game-card p {
+  font-weight: bold;
+  color: #004d40;
+  margin: 0;
+}
+
+span#playerName {
+  font-weight: bold;
+  color: #00695c;
+}
+*/
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom right, #0d0d0d, #1c1c2b);
+  color: #f8f8f2;
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding: 20px;
+}
+
+/* Main Centered Container */
+.center-box {
+  background-color: #1c1c2b;
+  padding: 30px 20px;
+  margin: 40px auto;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(157, 125, 249, 0.3);
+}
+
+/* Headings */
+h1, h2 {
+  color: #9d7df9;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Input field */
+input[type="text"] {
+  padding: 12px 15px;
+  font-size: 16px;
+  width: 100%;
+  max-width: 300px;
+  margin: 20px auto;
+  background-color: #2f2f40;
+  color: #f8f8f2;
+  border: 2px solid #5df2d6;
+  border-radius: 6px;
+  display: block;
+}
+
+/* Buttons */
+button {
+  background: #5df2d6;
+  color: #0d0d0d;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  margin: 10px auto;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px #5df2d6;
+  display: block;
+  width: 100%;
+  max-width: 300px;
+}
+
+button:hover {
+  background: #9d7df9;
+  box-shadow: 0 0 15px #9d7df9;
+  color: #ffffff;
+}
+
+/* Game Lobby List */
+.game-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 30px;
+}
+
+/* Text */
+p {
+  font-size: 18px;
+  margin: 20px 0;
+  color: #d6d6d6;
+  text-align: center;
+}
+
+span#playerName {
+  font-weight: bold;
+  color: #5df2d6;
+}
+
+/* Game Logos / Icons */
+img {
+  max-width: 100%;
+  height: auto;
+  margin: 20px 0;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+}

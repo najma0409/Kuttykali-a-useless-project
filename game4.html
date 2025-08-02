@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Game 4: Surprise Box</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>🎁 Game 4: The Surprise Box</h2>
+  <p>Player: <span id="playerName"></span></p>
+  <p>This is a placeholder for your 4th game.</p>
+
+  <p style="font-style: italic;">Maybe you’ll build a coconut-smashing contest or a "useless fact generator"? 😄</p>
+
+  <button onclick="window.location.href='lobby.html'">🔙 Back to Lobby</button>
+
+  <script>
+    document.getElementById("playerName").innerText = localStorage.getItem("playerName") || "Guest";
+  </script>
+</body>
+</html>
