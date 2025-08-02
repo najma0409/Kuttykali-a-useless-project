@@ -19,6 +19,9 @@ Because not everything needs a reason.
 Because sometimes, doing things that don’t matter is exactly what your brain needs.  
 Because calmness doesn’t always come from silence — it comes from **play**.
 
+
+#deploy link : https://ananyaullas.github.io/Kuttykali-a-useless-project/
+
 # Few Screenshots attatched for reference:
 <img width="1920" height="1008" alt="Screenshot 2025-08-02 072605" src="https://github.com/user-attachments/assets/6e63849b-5f12-4e27-8d3a-cb2a053590c9" />
 <img width="1920" height="1008" alt="Screenshot 2025-08-02 072619" src="https://github.com/user-attachments/assets/a6f416f2-35a0-41e0-9ca2-39b51cf90c0c" />
